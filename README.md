@@ -10,10 +10,11 @@ Usage
 
 To backup a [MySQL](https://hub.docker.com/_/mysql/) or [MariaDB](https://hub.docker.com/_/mariadb/) container you simply have to run a container from this Docker image and link a MySQL or MariaDB container to it.
 
-The container will automatically detect the linked database container and tries to backup the database based on the environment variables of the database container:
-
-* `<CONTAINER>_ENV_MYSQL_DATABASE`
-* `<CONTAINER>_ENV_MYSQL_ROOT_PASSWORD`
+The container will use database, specified by environment variables
+* DB_ADDR - IP address or dns name
+* DB_PORT - MySQL TCP port
+* DB_USER - User to access database
+* DB_PASS - User password
 
 Please note the backup will be written to `/backup` by default, so you might want to mount that directory from your host.
 
