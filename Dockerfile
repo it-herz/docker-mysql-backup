@@ -16,7 +16,7 @@ RUN \
 
 RUN \
     apt-get -y update && \
-    apt-get -y install mydumper && \
+    apt-get -y install mydumper mariadb-client mariadb-common && \
     rm -rf /var/lib/apt/lists/*
 
 #

@@ -72,7 +72,6 @@ umask ${UMASK}
 #
 
 CLI_OPTIONS="-v 3 -h ${DB_ADDR} -P ${DB_PORT:=3306} -u ${DB_USER:=/root} -p ${DB_PASS} -B ${DB_NAME:=mysql} ${OPTIONS}"
-echo $CLI_OPTIONS
 
 #
 # When MODE is set to "BACKUP", then mydumper has to be used to backup the database.
