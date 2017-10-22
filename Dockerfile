@@ -26,6 +26,10 @@ RUN \
 COPY init.sh /init.sh
 RUN chmod 750 /init.sh
 
+# Change time zone.
+echo "Europe/Moscow" > /etc/timezone    
+dpkg-reconfigure -f noninteractive tzdata
+
 #
 # Set container settings.
 #
