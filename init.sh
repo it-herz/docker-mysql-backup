@@ -47,30 +47,15 @@ echo
 # Display the container informations on standard out.
 #
 
-CONTAINER=$(export | sed -nr "/ENV_MYSQL_DATABASE/{s/^.+ -x (.+)_ENV.+/\1/p;q}")
-
-if [[ -z "${CONTAINER}" ]]
-then
-    echo "ERROR: Couldn't find linked MySQL container." >&2
-    echo >&2
-    echo "Please link a MySQL or MariaDB container to the backup container and try again" >&2
-    exit 1
-fi
-
-DB_PORT=$(export | sed -nr "/-x ${CONTAINER}_PORT_[[:digit:]]+_TCP_PORT/{s/^.+ -x (.+)=.+/\1/p}")
-DB_ADDR="${CONTAINER}_PORT_${!DB_PORT}_TCP_ADDR"
-DB_NAME="${CONTAINER}_ENV_MYSQL_DATABASE"
-DB_PASS="${CONTAINER}_ENV_MYSQL_ROOT_PASSWORD"
-
-echo "CONTAINER SETTINGS"
+echo "DATABASE SETTINGS"
 echo "=================="
 echo
-echo "  Container: ${CONTAINER}"
 echo
-echo "  Address:   ${!DB_ADDR}"
-echo "  Port:      ${!DB_PORT}"
+echo "  Address:   ${DB_ADDR}"
+echo "  Port:      ${DB_PORT:=3306}"
 echo
-echo "  Database:  ${!DB_NAME}"
+echo "  User:      ${DB_USER:=root}"
+echo "  Database:  ${DB_NAME:=mysql}"
 echo
 
 #
@@ -86,7 +71,7 @@ umask ${UMASK}
 # Building common CLI options to use for mydumper and myloader.
 #
 
-CLI_OPTIONS="-v 3 -h ${!DB_ADDR} -P ${!DB_PORT} -u root -p ${!DB_PASS} -B ${!DB_NAME} ${OPTIONS}"
+CLI_OPTIONS="-v 3 -h ${DB_ADDR} -P ${DB_PORT:=3306} -u ${DB_USER:=/root} -p ${DB_PASS} -B ${DB_NAME:=mysql} ${OPTIONS}"
 
 #
 # When MODE is set to "BACKUP", then mydumper has to be used to backup the database.

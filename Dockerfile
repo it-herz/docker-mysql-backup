@@ -6,9 +6,9 @@ MAINTAINER confirm IT solutions, dbarton
 # Add user.
 #
 
-RUN \
-    groupadd -g 666 mybackup && \
-    useradd -u 666 -g 666 -d /backup -c "MySQL Backup User" mybackup
+#RUN \
+#    groupadd -g 666 mybackup && \
+#    useradd -u 666 -g 666 -d /backup -c "MySQL Backup User" mybackup
 
 #
 # Install required packages.
@@ -16,7 +16,7 @@ RUN \
 
 RUN \
     apt-get -y update && \
-    apt-get -y install mydumper && \
+    apt-get -y install mydumper mariadb-client mariadb-common && \
     rm -rf /var/lib/apt/lists/*
 
 #
@@ -25,6 +25,9 @@ RUN \
 
 COPY init.sh /init.sh
 RUN chmod 750 /init.sh
+
+# Change time zone.
+RUN echo "Europe/Moscow" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 
 #
 # Set container settings.
