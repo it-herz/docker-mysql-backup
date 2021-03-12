@@ -6,9 +6,9 @@ MAINTAINER confirm IT solutions, dbarton
 # Add user.
 #
 
-RUN \
-    groupadd -g 666 mybackup && \
-    useradd -u 666 -g 666 -d /backup -c "MySQL Backup User" mybackup
+#RUN \
+#    groupadd -g 666 mybackup && \
+#    useradd -u 666 -g 666 -d /backup -c "MySQL Backup User" mybackup
 
 #
 # Install required packages.
